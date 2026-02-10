@@ -112,14 +112,18 @@ def yolo_to_xyxy(box, img_w, img_h):
     y2 = int(cy + h / 2)
 
     return x1, y1, x2, y2
+
+def denormalize(img, MEAN, STD):
+    mean = torch.tensor(MEAN, device=img.device).view(3, 1, 1)
+    std  = torch.tensor(STD,  device=img.device).view(3, 1, 1)
+
+    img = img * std + mean
+    return img.clamp(0, 1)
         
-def draw_detection(pred, gt, image):
+def draw_detection(pred, gt, image, ax):
     w,h = 256, 256
     gt_xyxy   = yolo_to_xyxy(gt, w, h)
     pred_xyxy = yolo_to_xyxy(pred, w, h)
-
-    fig, ax = plt.subplots(1)
-    ax.imshow(image.permute(1,2,0))
 
     # GT box (green)
     x1,y1,x2,y2 = gt_xyxy
@@ -135,8 +139,8 @@ def draw_detection(pred, gt, image):
         edgecolor='r', linewidth=2, fill=False
     ))
 
-    plt.show()
-
+MEAN = [0.485, 0.456, 0.406]
+STD  = [0.229, 0.224, 0.225]
 train, test = split_dataset("dataset.json")
 train_dataset = DetectionDataset(train, max_samples=500)
 test_dataset  = DetectionDataset(test, max_samples=500)
@@ -148,11 +152,24 @@ testLoader = DataLoader(test_dataset, batch_size=size, num_workers=os.cpu_count(
 preds, gts, images = evaluate_network(testLoader)
 preds = torch.cat(preds, dim=0)
 gts = torch.cat(gts, dim=0)
-print(len(images))
 
-# detection#
-i = 4
-j = 1
-k = j * size + i
-draw_detection(preds[k], gts[k], images[j][i])
+# detection
+fig, ax = plt.subplots(2,4)
+j = 45
+
+for i in range(size):
+    k = j * size + i  
+
+    image = denormalize(images[j][i], MEAN, STD)
+    image = image.permute(1, 2, 0).cpu().numpy()
+
+    a = ax[i // 4, i % 4]
+    a.imshow(image)
+
+    draw_detection(preds[k], gts[k], image, a)
+    a.axis("off")
+
+plt.tight_layout()
+plt.show()
+    
 
