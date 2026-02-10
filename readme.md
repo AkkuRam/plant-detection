@@ -8,7 +8,7 @@ different species of plants.
 - To run the code, use the following command "python -m src.train_pipeline"
 - At the bottom of the "train_pipeline" file you can modify the numbers to view different batch sizes
 
-== Pipeline
+## Pipeline
 
 - Preprocessing: Resizing (256x256), Gaussian Blur and Normalization 
 - Basemodel: resnet50
