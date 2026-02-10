@@ -36,6 +36,9 @@ different species of plants.
 
 ## Result
 
-The following set of images shows the ground truth label (green) and the model prediction (red) of one batch size. As seen here, the batch size was 8, where 500 images were used for training and the test set. 
+The following set of images shows the following:
+- ground truth label (green) 
+- the model prediction (red)
+- Each batch size is 8, where in total there are 63 batches, where the batch displayed below is batch 45
 
 ![resultsimage](detection_image.png)
