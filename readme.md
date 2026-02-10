@@ -25,7 +25,9 @@ different species of plants.
 - This is then later used for dataloaders for image training and testing
 
 **model.py**
-- This defines the model being used to predict the box bounds for detection
+- This defines the models being used for the respective predictions
+- "regressor" is for the bounding box predictions
+- "classifier" is for the class labels assigned to each leaf image
 
 **train_pipeline.py**
 - This is the general pipeline from splitting data into training and test (0.67/0.33)
