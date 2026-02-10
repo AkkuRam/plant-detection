@@ -14,7 +14,6 @@ from torch.utils.data import DataLoader
 from src import model
 from src.model import SimpleDetector
 from src.detection_dataset import DetectionDataset
-plt.style.use("dark_background")
 
 def split_dataset(json_file, test_size=0.33, random_state=42):
     with open(json_file, "r") as f:
