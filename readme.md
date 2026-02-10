@@ -1,4 +1,4 @@
-== Overview
+## Overview
 
 The dataset used can be obtained from Kaggle (https://www.kaggle.com/datasets/sebastianpalaciob/plantvillage-for-object-detection-yolo/data), where the objective is to perform object detection on 38 
 different species of plants. 
@@ -32,7 +32,7 @@ different species of plants.
 - Then training the network and evaluating on test set
 - Finally, displaying these labels, essentially ground truth vs predicted label 
 
-== Result
+## Result
 
 The following set of images shows the ground truth label (green) and the model prediction (red) of one batch size. As seen here, the batch size was 8, where 500 images were used for training and the test set. 
 
